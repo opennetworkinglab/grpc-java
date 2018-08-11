@@ -6,10 +6,11 @@ def _path_ignoring_repository(f):
 def _gensource_impl(ctx):
   if len(ctx.attr.srcs) > 1:
     fail("Only one src value supported", "srcs")
-  for s in ctx.attr.srcs:
-    if s.label.package != ctx.label.package:
-      print(("in srcs attribute of {0}: Proto source with label {1} should be in "
-             + "same package as consuming rule").format(ctx.label, s.label))
+# For how we use this in ONOS it's ok to comment out this warning message.
+#  for s in ctx.attr.srcs:
+#    if s.label.package != ctx.label.package:
+#      print(("in srcs attribute of {0}: Proto source with label {1} should be in "
+#             + "same package as consuming rule").format(ctx.label, s.label))
   # Use .jar since .srcjar makes protoc think output will be a directory
   srcdotjar = ctx.new_file(ctx.label.name + "_src.jar")
 

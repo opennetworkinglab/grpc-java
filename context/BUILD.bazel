@@ -1,3 +1,13 @@
+# Hack to expose Java sources to java_library rules from other packages.
+genrule(
+    name = "context-srcjar",
+    srcs = [],
+    outs = ["context.srcjar"],
+    cmd = "cp $(location :libcontext-src.jar) $@",
+    tools = [":libcontext-src.jar"],
+    visibility = ["//visibility:public"],
+)
+
 java_library(
     name = "context",
     srcs = glob([

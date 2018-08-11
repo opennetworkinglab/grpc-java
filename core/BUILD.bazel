@@ -1,17 +1,23 @@
+# Patched core package that includes internal and context.
 java_library(
     name = "core",
     srcs = glob([
         "src/main/java/io/grpc/*.java",
-    ]),
+        "src/main/java/io/grpc/internal/*.java",
+    ]) + [
+        "//context:context-srcjar",
+    ],
     resources = glob([
         "src/main/resources/**",
     ]),
     visibility = ["//visibility:public"],
     deps = [
-        "//context",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_errorprone_error_prone_annotations//jar",
         "@com_google_guava_guava//jar",
+        "@io_opencensus_opencensus_api//jar",
+        "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+        "@com_google_code_gson_gson//jar",
     ],
 )
 
