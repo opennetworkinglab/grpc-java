@@ -1,8 +1,13 @@
-java_library(
-    name = "core",
-    visibility = ["//visibility:public"],
-    exports = ["//api"],
-)
+# The api package has been introduced with gRPC 1.21, there's no need to
+# maintain  backward compatibility with the core one in ONOS. Force everyone to
+# depend on //api instead.
+# java_library(
+#     name = "core",
+#     visibility = ["//visibility:public"],
+#     exports = ["//api"],
+# )
+
+# Set visibility of all targets to public so we can depend on them in ONOS.
 
 java_library(
     name = "inprocess",
@@ -28,7 +33,7 @@ java_library(
     resources = glob([
         "src/bazel-internal/resources/**",
     ]),
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         "//api",
         "//context",
