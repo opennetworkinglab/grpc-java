@@ -11,11 +11,16 @@ PERFMARK_SRCS = glob(
     exclude = PERFMARK_INTERNAL_ACCESSOR_SRCS,
 )
 
-java_library(
-    name = "core",
-    visibility = ["//visibility:public"],
-    exports = ["//api"],
-)
+# The api package has been introduced with gRPC 1.21, there's no need to
+# maintain  backward compatibility with the core one in ONOS. Force everyone to 
+# depend on //api instead.
+# java_library(
+#     name = "core",
+#     visibility = ["//visibility:public"],
+#     exports = ["//api"],
+# )
+
+# Set visibility of all targets to public so we can depend on them in ONOS.
 
 java_library(
     name = "inprocess",
@@ -41,7 +46,7 @@ java_library(
     resources = glob([
         "src/bazel-internal/resources/**",
     ]),
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":perfmark",
         "//api",
@@ -79,7 +84,7 @@ java_library(
 java_library(
     name = "perfmark",
     srcs = PERFMARK_SRCS,
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_errorprone_error_prone_annotations//jar",

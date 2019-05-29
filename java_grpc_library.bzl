@@ -70,9 +70,11 @@ def _create_include_path(include):
 def _java_rpc_library_impl(ctx):
     if len(ctx.attr.srcs) != 1:
         fail("Exactly one src value supported", "srcs")
-    if ctx.attr.srcs[0].label.package != ctx.label.package:
-        print(("in srcs attribute of {0}: Proto source with label {1} should be in " +
-               "same package as consuming rule").format(ctx.label, ctx.attr.srcs[0].label))
+    
+    # Don't bother logging this in ONOS
+    # if ctx.attr.srcs[0].label.package != ctx.label.package:
+    #    print(("in srcs attribute of {0}: Proto source with label {1} should be in " +
+    #           "same package as consuming rule").format(ctx.label, ctx.attr.srcs[0].label))
 
     toolchain = ctx.attr._toolchain[_JavaRpcToolchainInfo]
     srcs = ctx.attr.srcs[0][ProtoInfo].direct_sources

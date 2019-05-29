@@ -1,11 +1,15 @@
+# Patched api package that includes context to fix the OSGi split brain problem.
+# https://github.com/grpc/grpc-java/issues/2727
+
 java_library(
     name = "api",
     srcs = glob([
         "src/main/java/**/*.java",
-    ]),
+    ]) + [
+        "//context:context-srcjar",
+    ],
     visibility = ["//visibility:public"],
     deps = [
-        "//context",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_guava_failureaccess//jar",  # future transitive dep of Guava. See #5214
         "@com_google_guava_guava//jar",
